@@ -1,5 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using ShopTARgv23.Data;
+using Microsoft.EntityFrameworkCore;
+using ShopTARgv23.Core.ServiceInterface;
+using ShopTARgv23.ApplicationServices.Services;
 
 namespace ShopTARgv23
 {
@@ -12,12 +14,12 @@ namespace ShopTARgv23
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<ShopTARgv23Context>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<ISpaceshipServices, SpaceshipsServices>();
 
+            builder.Services.AddDbContext<ShopTARgv23Context>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
-
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -39,11 +41,6 @@ namespace ShopTARgv23
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
-        }
-
-        private static void CreateDbIfNotExists(WebApplication app)
-        {
-            throw new NotImplementedException();
         }
     }
 }
