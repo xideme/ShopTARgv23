@@ -4,6 +4,7 @@ using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
 using ShopTARgv23.Models.Spaceships;
+using System.Linq;
 
 namespace ShopTARgv23.Controllers
 {
@@ -60,6 +61,16 @@ namespace ShopTARgv23.Controllers
                 CargoWeight = vm.CargoWeight,
                 Crew = vm.Crew,
                 EnginePower = vm.EnginePower,
+                Files = vm.Files,
+                Image = vm.FileToApiViewModels
+                    .Select( x=> new FileToApiDto
+                    {
+                        Id = x.ImageId,
+                        ExistingFilePath = x.FilePath,
+                        SpaceshipId = x.SpaceshipId,
+                        
+
+                    }).ToArray()
 
             };
 
