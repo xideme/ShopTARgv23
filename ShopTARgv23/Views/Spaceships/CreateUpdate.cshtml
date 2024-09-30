@@ -57,7 +57,15 @@ else
             </div>
         </div>
 
-        <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
+        @if (Model.Id.HasValue)
+        {
+            <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
+        }
+        else
+        {
+            <input asp-action="create" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Create" />
+        }
+
 
     </form>
 </div>

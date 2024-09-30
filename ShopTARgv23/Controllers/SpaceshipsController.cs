@@ -119,6 +119,8 @@ namespace ShopTARgv23.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.Crew = spaceship.Crew;
             vm.EnginePower = spaceship.EnginePower;
+            vm.ModifiedAt = spaceship.ModifiedAt;
+            vm.CreatedAt = spaceship.CreatedAt; 
 
             return View("CreateUpdate", vm);
         }
