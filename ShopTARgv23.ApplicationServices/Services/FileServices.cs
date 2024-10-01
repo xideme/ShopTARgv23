@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
-    public class FileServices
+    public class FileServices : IFileServices
     {
         private readonly ShopTARgv23Context _context;
         private readonly IHostEnvironment _webHost;
