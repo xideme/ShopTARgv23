@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="multipleFileUpload\0445fa37-e14d-42c5-9d11-cf09ec61b618_521258_gory_noch_zvyozdy_2560x1440_%28www.GdeFon.ru%29.jpg" />
+    <None Remove="multipleFileUpload\0854101d-21c3-432e-94bb-bbd1857fcb4c_Kuvatõmmis %2838%29.png" />
+    <None Remove="multipleFileUpload\386f11da-eab9-4056-8116-e02c1af91eef_Screenshot %283%29.png" />
+    <None Remove="multipleFileUpload\585406eb-93fd-4aca-8d1a-def27af54421_Screenshot %283%29.png" />
+    <None Remove="multipleFileUpload\a0386ae4-3230-400a-8dc8-4133eb667d1d_14587559217920.jpg" />
+    <None Remove="multipleFileUpload\a08a41e3-d6d5-4c8e-9538-82c44374f831_Screenshot %281%29.png" />
+    <None Remove="multipleFileUpload\ed2a6239-ed9d-4a8e-9aa5-79820b6001e6_Screenshot %281%29.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -23,6 +33,10 @@
   <ItemGroup>
     <ProjectReference Include="..\ShopTARgv23.ApplicationServices\ShopTARgv23.ApplicationServices.csproj" />
     <ProjectReference Include="..\ShopTARgv23.Data\ShopTARgv23.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="multipleFileUpload\" />
   </ItemGroup>
 
 </Project>

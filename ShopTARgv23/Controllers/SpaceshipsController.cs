@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
@@ -12,15 +13,18 @@ namespace ShopTARgv23.Controllers
     {
         private readonly ShopTARgv23Context _context;
         private readonly ISpaceshipServices _spaceshipServices;
+        private readonly IFileServices _fileServices;
 
         public SpaceshipsController
             (
                 ShopTARgv23Context context,
-                ISpaceshipServices spaceshipServices
+                ISpaceshipServices spaceshipServices,
+                IFileServices fileServices
             )
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
+            _fileServices = fileServices;
         }
 
         public IActionResult Index()
@@ -151,6 +155,8 @@ namespace ShopTARgv23.Controllers
             dto.CreatedAt = vm.CreatedAt;
             dto.ModifiedAt = vm.ModifiedAt;
 
+
+
             var result = await _spaceshipServices.Update(dto);
 
             if (result == null)
@@ -170,6 +176,14 @@ namespace ShopTARgv23.Controllers
             {
                 return NotFound();
             }
+
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageId = y.Id
+                }).ToArrayAsync();
 
             var vm = new SpaceshipDeleteViewModel();
 
@@ -192,6 +206,24 @@ namespace ShopTARgv23.Controllers
             var spaceship = await _spaceshipServices.Delete(id);
 
             if(spaceship == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(FileToApiViewModel vm)
+        {
+            var dto = new FileToApiDto()
+            {
+                Id = vm.ImageId,
+            };
+
+            var image = await _fileServices.RemoveImageFromApi(dto);
+
+            if (image == null)
             {
                 return RedirectToAction(nameof(Index));
             }
