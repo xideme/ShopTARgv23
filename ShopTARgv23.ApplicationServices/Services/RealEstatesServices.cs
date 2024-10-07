@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using ShopTARgv23.Core.Domain;
+using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
@@ -28,6 +25,44 @@ namespace ShopTARgv23.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
+        }
+
+        public async Task<RealEstate> Create(RealEstateDto dto)
+        {
+            RealEstate realestate = new();
+
+            realestate.Id = Guid.NewGuid();
+            realestate.Location = dto.Location;
+            realestate.Size = dto.Size;
+            realestate.RoomNumber = dto.RoomNumber;
+            realestate.BuildingType = dto.BuildingType;
+            realestate.CreatedAt = DateTime.Now;
+            realestate.ModifiedAt = DateTime.Now;
+
+            await _context.RealEstates.AddAsync(realestate);
+            await _context.SaveChangesAsync();
+
+            return realestate;
+
+        }
+
+
+        public async Task<RealEstate> Update(RealEstateDto dto)
+        {
+            RealEstate domain = new();
+
+            domain.Id = dto.Id;
+            domain.Location = dto.Location;
+            domain.Size = dto.Size;
+            domain.RoomNumber = dto.RoomNumber;
+            domain.BuildingType = dto.BuildingType;
+            domain.CreatedAt = dto.CreatedAt;
+            domain.ModifiedAt = DateTime.Now;
+
+            _context.RealEstates.Update(domain);
+            await _context.SaveChangesAsync();
+
+            return domain;
         }
     }
 }
