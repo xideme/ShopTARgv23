@@ -10,13 +10,17 @@ namespace ShopTARgv23.ApplicationServices.Services
     public class RealEstatesServices : IRealEstateServices
     {
         private readonly ShopTARgv23Context _context;
+        private readonly IFileServices _fileServices;
 
         public RealEstatesServices
             (
-                ShopTARgv23Context context
+                ShopTARgv23Context context,
+                IFileServices fileServices
             )
         {
             _context = context;
+            _fileServices = fileServices;
+
         }
 
         public async Task<RealEstate> DetailsAsync(Guid id)
@@ -38,6 +42,12 @@ namespace ShopTARgv23.ApplicationServices.Services
             realestate.BuildingType = dto.BuildingType;
             realestate.CreatedAt = DateTime.Now;
             realestate.ModifiedAt = DateTime.Now;
+
+
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realestate);
+            }
 
             await _context.RealEstates.AddAsync(realestate);
             await _context.SaveChangesAsync();
