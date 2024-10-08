@@ -121,5 +121,64 @@ namespace ShopTARgv23.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var realestate = await _realestateServices.DetailsAsync(id);
+
+            if (realestate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstateDetailsViewModel();
+
+            vm.Id = realestate.Id;
+            vm.Location = realestate.Location;
+            vm.Size = realestate.Size;
+            vm.RoomNumber = realestate.RoomNumber;
+            vm.BuildingType = realestate.BuildingType;
+            vm.CreatedAt = realestate.CreatedAt;
+            vm.ModifiedAt = realestate.ModifiedAt;
+
+            return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var realestate = await _realestateServices.DetailsAsync(id);
+
+            if (realestate == null)
+            {
+                return NotFound();
+            }
+
+            var vm = new RealEstateDeleteViewModel();
+
+            vm.Id = realestate.Id;
+            vm.Location = realestate.Location;
+            vm.Size = realestate.Size;
+            vm.RoomNumber = realestate.RoomNumber;
+            vm.BuildingType = realestate.BuildingType;
+            vm.CreatedAt = realestate.CreatedAt;
+            vm.ModifiedAt = realestate.ModifiedAt;
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var realestate = await _realestateServices.Delete(id);
+
+            if (realestate == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

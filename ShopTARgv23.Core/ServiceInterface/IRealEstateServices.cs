@@ -9,5 +9,6 @@ namespace ShopTARgv23.Core.ServiceInterface
         Task<RealEstate> DetailsAsync(Guid id);
         Task<RealEstate> Update(RealEstateDto dto);
         Task<RealEstate> Create(RealEstateDto dto);
+        Task<RealEstate> Delete(Guid id);
     }
 }
