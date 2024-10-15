@@ -6,7 +6,7 @@ namespace ShopTARgv23.Core.ServiceInterface
 {
     public interface IRealEstateServices
     {
-        Task<RealEstate> DetailsAsync(Guid id);
+        Task<RealEstate> GetAsync(Guid id);
         Task<RealEstate> Update(RealEstateDto dto);
         Task<RealEstate> Create(RealEstateDto dto);
         Task<RealEstate> Delete(Guid id);

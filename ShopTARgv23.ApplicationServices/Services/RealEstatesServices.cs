@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using ShopTARgv23.Core.Domain;
 using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data;
+
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
@@ -20,10 +20,10 @@ namespace ShopTARgv23.ApplicationServices.Services
         {
             _context = context;
             _fileServices = fileServices;
-
         }
 
-        public async Task<RealEstate> DetailsAsync(Guid id)
+
+        public async Task<RealEstate> GetAsync(Guid id)
         {
             var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
@@ -33,41 +33,44 @@ namespace ShopTARgv23.ApplicationServices.Services
 
         public async Task<RealEstate> Create(RealEstateDto dto)
         {
-            RealEstate realestate = new();
+            RealEstate realEstate = new RealEstate();
 
-            realestate.Id = Guid.NewGuid();
-            realestate.Location = dto.Location;
-            realestate.Size = dto.Size;
-            realestate.RoomNumber = dto.RoomNumber;
-            realestate.BuildingType = dto.BuildingType;
-            realestate.CreatedAt = DateTime.Now;
-            realestate.ModifiedAt = DateTime.Now;
-
+            realEstate.Id = Guid.NewGuid();
+            realEstate.Location = dto.Location;
+            realEstate.Size = dto.Size;
+            realEstate.RoomNumber = dto.RoomNumber;
+            realEstate.BuildingType = dto.BuildingType;
+            realEstate.CreatedAt = DateTime.Now;
+            realEstate.ModifiedAt = DateTime.Now;
 
             if (dto.Files != null)
             {
-                _fileServices.UploadFilesToDatabase(dto, realestate);
+                _fileServices.UploadFilesToDatabase(dto, realEstate);
             }
 
-            await _context.RealEstates.AddAsync(realestate);
+            await _context.RealEstates.AddAsync(realEstate);
             await _context.SaveChangesAsync();
 
-            return realestate;
-
+            return realEstate;
         }
-
 
         public async Task<RealEstate> Update(RealEstateDto dto)
         {
-            RealEstate domain = new();
+            var domain = new RealEstate()
+            {
+                Id = dto.Id,
+                Location = dto.Location,
+                Size = dto.Size,
+                RoomNumber = dto.RoomNumber,
+                BuildingType = dto.BuildingType,
+                CreatedAt = dto.CreatedAt,
+                ModifiedAt = DateTime.Now,
+            };
 
-            domain.Id = dto.Id;
-            domain.Location = dto.Location;
-            domain.Size = dto.Size;
-            domain.RoomNumber = dto.RoomNumber;
-            domain.BuildingType = dto.BuildingType;
-            domain.CreatedAt = dto.CreatedAt;
-            domain.ModifiedAt = DateTime.Now;
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, domain);
+            }
 
             _context.RealEstates.Update(domain);
             await _context.SaveChangesAsync();
@@ -77,13 +80,23 @@ namespace ShopTARgv23.ApplicationServices.Services
 
         public async Task<RealEstate> Delete(Guid id)
         {
-            var realestate = await _context.RealEstates
+            var result = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.RealEstates.Remove(realestate);
+            var images = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new FileToDatabaseDto
+                {
+                    Id = y.Id,
+                    ImageTitle = y.ImageTitle,
+                    RealEstateId = y.RealEstateId
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromDatabase(images);
+            _context.RealEstates.Remove(result);
             await _context.SaveChangesAsync();
 
-            return realestate;
+            return result;
         }
     }
 }
