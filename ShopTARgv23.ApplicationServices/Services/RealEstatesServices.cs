@@ -92,7 +92,7 @@ namespace ShopTARgv23.ApplicationServices.Services
                     RealEstateId = y.RealEstateId
                 }).ToArrayAsync();
 
-            await _fileServices.RemoveImagesFromDatabase(images);
+            await _fileServices.RemoveImagesFromDB(images);
             _context.RealEstates.Remove(result);
             await _context.SaveChangesAsync();
 
