@@ -93,7 +93,7 @@ namespace ShopTARgv23.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var kindergarten = await _kindergartenServices.DetailsAsync(id);
+            var kindergarten = await _kindergartenServices.GetAsync(id);
 
             if (kindergarten == null)
             {
@@ -128,7 +128,7 @@ namespace ShopTARgv23.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var kindergarten = await _kindergartenServices.DetailsAsync(id);
+            var kindergarten = await _kindergartenServices.GetAsync(id);
 
             if (kindergarten == null)
             {
@@ -194,7 +194,7 @@ namespace ShopTARgv23.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var kindergarten = await _kindergartenServices.DetailsAsync(id);
+            var kindergarten = await _kindergartenServices.GetAsync(id);
 
             if (kindergarten == null)
             {
@@ -202,7 +202,7 @@ namespace ShopTARgv23.Controllers
             }
 
             var photos = await _context.FileToDatabases
-               .Where(x => x.RealEstateId == id)
+               .Where(x => x.KindergartenId == id)
                .Select(y => new KindergartenImageViewModel
                {
                    KindergartenId = y.Id,

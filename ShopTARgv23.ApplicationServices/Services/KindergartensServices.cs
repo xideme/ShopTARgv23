@@ -29,7 +29,7 @@ namespace ShopTARgv23.ApplicationServices.Services
                 _fileServices = fileServices;
         }
 
-            public async Task<Kindergarten> DetailsAsync(Guid id)
+            public async Task<Kindergarten> GetAsync(Guid id)
             {
                 var result = await _context.Kindergartens
                     .FirstOrDefaultAsync(x => x.Id == id);
@@ -99,7 +99,7 @@ namespace ShopTARgv23.ApplicationServices.Services
                    KindergartenId = y.KindergartenId
                }).ToArrayAsync();
 
-                await _fileServices.RemoveImagesFromDatabase(images);
+                await _fileServices.RemoveImagesFromDB(images);
                 _context.Kindergartens.Remove(kindergarten);
                 await _context.SaveChangesAsync();
 

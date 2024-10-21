@@ -14,6 +14,6 @@
         public DateTime? UpdatedAt { get; set; }
 
         public List<KindergartenImageViewModel> Image { get; set; }
-    = new List<KindergartenImageViewModel>();
+            = new List<KindergartenImageViewModel>();
     }
 }
