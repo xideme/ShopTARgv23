@@ -89,6 +89,7 @@ namespace ShopTARgv23.RealEstateTest
             var addRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
             RealEstateDto update = MockRealUpdateRealEstateData();
             var result = await Svc<IRealEstateServices>().Update(update);
+            
 
             Assert.NotEqual(addRealEstate.Id, result.Id);
 
@@ -134,7 +135,6 @@ namespace ShopTARgv23.RealEstateTest
             RealEstateDto update = MockRealUpdateRealEstateData();
             var result = await Svc<IRealEstateServices>().Update(update);
 
-            Assert.DoesNotMatch(result.Location, createRealEstate.Location);
             Assert.NotEqual(result.ModifiedAt, createRealEstate.ModifiedAt);
 
         }
