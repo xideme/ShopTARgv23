@@ -3,6 +3,7 @@ using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data.Migrations;
 using System;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ShopTARgv23.RealEstateTest
 {
@@ -81,6 +82,20 @@ namespace ShopTARgv23.RealEstateTest
 
         [Fact]
 
+        public async Task Should_UpdateByIdRealEstate_WhenReturnsNotEqual()
+        {
+            RealEstateDto realEstate = MockRealEstateData();
+
+            var addRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
+            RealEstateDto update = MockRealUpdateRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(update);
+
+            Assert.NotEqual(addRealEstate.Id, result.Id);
+
+        }
+
+        [Fact]
+
         public async Task Should_UpdateRealEstate_WhenUpdateData()
         {
 
@@ -124,6 +139,21 @@ namespace ShopTARgv23.RealEstateTest
 
         }
 
+        [Fact]
+        public async Task ShouldNot_UpdateRealEstate_WhenNotUpdateData()
+        {
+            RealEstateDto dto = MockRealEstateData();
+            var createRealEstate = await Svc<IRealEstateServices>().Create(dto);
+
+            RealEstateDto nullUpdate = MockNullRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(nullUpdate);
+
+            var nullId = nullUpdate.Id;
+
+            Assert.True(dto.Id == nullId);
+
+        }
+
         private RealEstateDto MockRealEstateData()
         {
             RealEstateDto realEstate = new()
@@ -151,6 +181,21 @@ namespace ShopTARgv23.RealEstateTest
                 ModifiedAt = DateTime.Now,
             };
             return realEstate;
+        }
+
+        private RealEstateDto MockNullRealEstateData()
+        {
+            RealEstateDto nullDto = new()
+            {
+                Id = null,
+                Location = "Tallinn",
+                Size = 110,
+                RoomNumber = 5,
+                BuildingType = "ASD",
+                CreatedAt = DateTime.Now.AddYears(-1),
+                ModifiedAt = DateTime.Now.AddYears(-1),
+            };
+            return nullDto;
         }
     }
 }
