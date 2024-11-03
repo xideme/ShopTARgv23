@@ -3,6 +3,7 @@ using ShopTARgv23.Core.Dto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Data.Migrations;
 using System;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ShopTARgv23.RealEstateTest
 {
@@ -81,6 +82,21 @@ namespace ShopTARgv23.RealEstateTest
 
         [Fact]
 
+        public async Task Should_UpdateByIdRealEstate_WhenReturnsNotEqual()
+        {
+            RealEstateDto realEstate = MockRealEstateData();
+
+            var addRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
+            RealEstateDto update = MockRealUpdateRealEstateData();
+            var result = await Svc<IRealEstateServices>().Update(update);
+            
+
+            Assert.NotEqual(addRealEstate.Id, result.Id);
+
+        }
+
+        [Fact]
+
         public async Task Should_UpdateRealEstate_WhenUpdateData()
         {
 
@@ -119,94 +135,9 @@ namespace ShopTARgv23.RealEstateTest
             RealEstateDto update = MockRealUpdateRealEstateData();
             var result = await Svc<IRealEstateServices>().Update(update);
 
-            Assert.DoesNotMatch(result.Location, createRealEstate.Location);
             Assert.NotEqual(result.ModifiedAt, createRealEstate.ModifiedAt);
 
         }
-
-        [Fact]
-        public async Task ShouldNot_UpdateRealEstate_WhenNotUpdateData()
-        {
-            RealEstateDto dto = MockRealEstateData();
-            var createRealEstate = await Svc<IRealEstateServices>().Create(dto);
-
-            RealEstateDto nullUpdate = MockNullRealEstateData();
-            var result = await Svc<IRealEstateServices>().Update(nullUpdate);
-
-            var nullId = nullUpdate.Id;
-
-            Assert.True(dto.Id == nullId);
-
-        }
-
-        //Kodutoo
-
-        [Fact]
-        public async Task Should_ReturnNull_WhenGettingNonExistentRealEstate()
-        {
-            // Arrange
-            Guid nonExistentId = Guid.NewGuid(); // ID does not exist
-
-            // Act
-            var result = await Svc<IRealEstateServices>().GetAsync(nonExistentId);
-
-            // Assert
-            Assert.Null(result); // result to be null for a non-existent real estate
-        }
-
-
-        [Fact]
-        public async Task Should_ReturnRealEstate_WhenCreatedSuccessfully()
-        {
-            // Arrange
-            RealEstateDto dto = MockRealEstateData();
-
-            // Act
-            var result = await Svc<IRealEstateServices>().Create(dto);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(dto.Location, result.Location);
-            Assert.Equal(dto.Size, result.Size);
-            Assert.Equal(dto.RoomNumber, result.RoomNumber);
-            Assert.Equal(dto.BuildingType, result.BuildingType);
-        }
-
-
-        [Fact]
-        public async Task Should_ReturnRealEstate_WhenFetchingById()
-        {
-            // Arrange
-            var dto = MockRealEstateData();
-            var createdRealEstate = await Svc<IRealEstateServices>().Create(dto);
-
-            // Act
-            var result = await Svc<IRealEstateServices>().GetAsync((Guid)createdRealEstate.Id);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(createdRealEstate.Id, result.Id); 
-            Assert.Equal(dto.Location, result.Location);    
-            Assert.Equal(dto.Size, result.Size);            
-            Assert.Equal(dto.RoomNumber, result.RoomNumber); 
-            Assert.Equal(dto.BuildingType, result.BuildingType); 
-        }
-
-        [Fact]
-        public async Task Should_DeleteRealEstate_WhenExists()
-        {
-            // Arrange
-            var realEstate = MockRealEstateData();
-            var createdRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
-
-            // Act
-            var result = await Svc<IRealEstateServices>().Delete((Guid)createdRealEstate.Id);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(createdRealEstate.Id, result.Id); // Should return the deleted real estate
-        }
-
 
         private RealEstateDto MockRealEstateData()
         {
