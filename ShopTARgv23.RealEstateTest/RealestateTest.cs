@@ -139,6 +139,75 @@ namespace ShopTARgv23.RealEstateTest
 
         }
 
+
+        //Kodutoo
+
+        [Fact]
+        public async Task Should_ReturnNull_WhenGettingNonExistentRealEstate()
+        {
+            // Arrange
+            Guid nonExistentId = Guid.NewGuid(); // ID does not exist
+
+            // Act
+            var result = await Svc<IRealEstateServices>().GetAsync(nonExistentId);
+
+            // Assert
+            Assert.Null(result); // result to be null for a non-existent real estate
+        }
+
+
+        [Fact]
+        public async Task Should_ReturnRealEstate_WhenCreatedSuccessfully()
+        {
+            // Arrange
+            RealEstateDto dto = MockRealEstateData();
+
+            // Act
+            var result = await Svc<IRealEstateServices>().Create(dto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(dto.Location, result.Location);
+            Assert.Equal(dto.Size, result.Size);
+            Assert.Equal(dto.RoomNumber, result.RoomNumber);
+            Assert.Equal(dto.BuildingType, result.BuildingType);
+        }
+
+
+        [Fact]
+        public async Task Should_ReturnRealEstate_WhenFetchingById()
+        {
+            // Arrange
+            var dto = MockRealEstateData();
+            var createdRealEstate = await Svc<IRealEstateServices>().Create(dto);
+
+            // Act
+            var result = await Svc<IRealEstateServices>().GetAsync((Guid)createdRealEstate.Id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(createdRealEstate.Id, result.Id);
+            Assert.Equal(dto.Location, result.Location);
+            Assert.Equal(dto.Size, result.Size);
+            Assert.Equal(dto.RoomNumber, result.RoomNumber);
+            Assert.Equal(dto.BuildingType, result.BuildingType);
+        }
+
+        [Fact]
+        public async Task Should_DeleteRealEstate_WhenExists()
+        {
+            // Arrange
+            var realEstate = MockRealEstateData();
+            var createdRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
+
+            // Act
+            var result = await Svc<IRealEstateServices>().Delete((Guid)createdRealEstate.Id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(createdRealEstate.Id, result.Id); // Should return the deleted real estate
+        }
+
         private RealEstateDto MockRealEstateData()
         {
             RealEstateDto realEstate = new()
