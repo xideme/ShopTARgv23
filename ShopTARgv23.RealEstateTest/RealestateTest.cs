@@ -145,13 +145,12 @@ namespace ShopTARgv23.RealEstateTest
         [Fact]
         public async Task Should_ReturnNull_WhenGettingNonExistentRealEstate()
         {
-            // Arrange
+
             Guid nonExistentId = Guid.NewGuid(); // ID does not exist
 
-            // Act
+
             var result = await Svc<IRealEstateServices>().GetAsync(nonExistentId);
 
-            // Assert
             Assert.Null(result); // result to be null for a non-existent real estate
         }
 
@@ -159,10 +158,8 @@ namespace ShopTARgv23.RealEstateTest
         [Fact]
         public async Task Should_ReturnRealEstate_WhenCreatedSuccessfully()
         {
-            // Arrange
             RealEstateDto dto = MockRealEstateData();
 
-            // Act
             var result = await Svc<IRealEstateServices>().Create(dto);
 
             // Assert
@@ -177,11 +174,10 @@ namespace ShopTARgv23.RealEstateTest
         [Fact]
         public async Task Should_ReturnRealEstate_WhenFetchingById()
         {
-            // Arrange
+
             var dto = MockRealEstateData();
             var createdRealEstate = await Svc<IRealEstateServices>().Create(dto);
 
-            // Act
             var result = await Svc<IRealEstateServices>().GetAsync((Guid)createdRealEstate.Id);
 
             // Assert
@@ -196,11 +192,9 @@ namespace ShopTARgv23.RealEstateTest
         [Fact]
         public async Task Should_DeleteRealEstate_WhenExists()
         {
-            // Arrange
             var realEstate = MockRealEstateData();
             var createdRealEstate = await Svc<IRealEstateServices>().Create(realEstate);
 
-            // Act
             var result = await Svc<IRealEstateServices>().Delete((Guid)createdRealEstate.Id);
 
             // Assert
