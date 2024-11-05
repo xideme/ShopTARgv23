@@ -12,6 +12,8 @@ namespace ShopTARgv23.Core.Dto.WeatherDtos
 
         public string RegionId { get; set; }
 
+        public string CityCode { get; set; }
+
         public int Rank { get; set; }
 
         public string EffectiveDate { get; set; }

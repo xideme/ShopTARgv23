@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder\**" />
+    <Content Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="multipleFileUpload\0445fa37-e14d-42c5-9d11-cf09ec61b618_521258_gory_noch_zvyozdy_2560x1440_%28www.GdeFon.ru%29.jpg" />
     <None Remove="multipleFileUpload\0854101d-21c3-432e-94bb-bbd1857fcb4c_Kuvatõmmis %2838%29.png" />
     <None Remove="multipleFileUpload\386f11da-eab9-4056-8116-e02c1af91eef_Screenshot %283%29.png" />

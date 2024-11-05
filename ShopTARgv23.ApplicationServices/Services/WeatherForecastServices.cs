@@ -1,15 +1,17 @@
 ﻿using Nancy.Json;
 using ShopTARgv23.Core.Dto.WeatherDtos;
+using ShopTARgv23.Core.ServiceInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
-    public class WeatherForecastServices
+    public class WeatherForecastServices : IWeatherForecastServices
     {
 
         public async Task<AccuLocationWeatherResultDto> AccuWeatherResult(AccuLocationWeatherResultDto dto)
@@ -23,8 +25,16 @@ namespace ShopTARgv23.ApplicationServices.Services
                 string json = client.DownloadString(url);
 
                 AccuLocationRootDto accuResult = new JavaScriptSerializer().Deserialize<AccuLocationRootDto>(json);
+
+                dto.CityName = accuResult.LocalizedName;
+                dto.CityCode = accuResult.Key;
+                dto.Rank = accuResult.Rank;
+
             }
+
             return dto;
+
+
         }
     }
 }
