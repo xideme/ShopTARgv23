@@ -24,13 +24,17 @@ namespace ShopTARgv23.ApplicationServices.Services
             {
                 string json = client.DownloadString(url);
 
-                AccuLocationRootDto accuResult = new JavaScriptSerializer().Deserialize<AccuLocationRootDto>(json);
+                List<AccuLocationRootDto> accuResult = new JavaScriptSerializer().Deserialize<List<AccuLocationRootDto>>(json);
 
-                dto.CityName = accuResult.LocalizedName;
-                dto.CityCode = accuResult.Key;
-                dto.Rank = accuResult.Rank;
+
+                //127964
+                dto.CityName = accuResult[0].LocalizedName;
+                dto.CityCode = accuResult[0].Key;
+                dto.Rank = accuResult[0].Rank;
 
             }
+
+            string urlWeather = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.CityCode}?apikey={accuApiKey}";
 
             return dto;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShopTARgv23.Core.Dto.WeatherDtos
 {
+
 
     public class AdministrativeArea
     {
@@ -102,8 +104,20 @@ namespace ShopTARgv23.Core.Dto.WeatherDtos
         public string EnglishName { get; set; }
     }
 
+    //public class AccuLocationRootDto
+    //{
+    //    [JsonPropertyName("City")]
+
+    //    public List<City> Citys { get; set; }
+    //    }
+
     public class AccuLocationRootDto
     {
+
+        [JsonPropertyName("City")]
+
+        public List<City> Citys { get; set; }
+
         [JsonPropertyName("Version")]
         public int Version { get; set; }
 
