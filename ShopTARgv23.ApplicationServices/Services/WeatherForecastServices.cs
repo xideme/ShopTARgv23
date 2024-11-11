@@ -36,6 +36,54 @@ namespace ShopTARgv23.ApplicationServices.Services
 
             string urlWeather = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.CityCode}?apikey={accuApiKey}";
 
+            using (WebClient client = new WebClient())
+            {
+                string json = client.DownloadString(urlWeather);
+                AccuWeatherRootDto weatherRootDto = new JavaScriptSerializer()
+                    .Deserialize<AccuWeatherRootDto>(json);
+
+                dto.EffectiveDate = weatherRootDto.Headline.EffectiveDate;
+                dto.EffectiveDateEpochDate = weatherRootDto.Headline.EffectiveEpochDate;
+                dto.Severity = weatherRootDto.Headline.Severity;
+                dto.Text = weatherRootDto.Headline.Text;
+                dto.Category = weatherRootDto.Headline.Category;
+                dto.EndDate = weatherRootDto.Headline.EndDate;
+                dto.EndEpochDate = weatherRootDto.Headline.EndEpochDate;
+
+                dto.MobileLink = weatherRootDto.Headline.MobileLink;
+                dto.Link = weatherRootDto.Headline.Link;
+
+                dto.DailyForecastsDate = weatherRootDto.DailyForecasts[0].Date;
+                dto.DailyForecastsEpochDate = weatherRootDto.DailyForecasts[0].EpochDate;
+
+                dto.TempMinValue = weatherRootDto.DailyForecasts[0].Temperature.Minimum.Value;
+                dto.TempMinUnit = weatherRootDto.DailyForecasts[0].Temperature.Minimum.Unit;
+                dto.TempMinUnitType = weatherRootDto.DailyForecasts[0].Temperature.Minimum.UnitType;
+
+                dto.TempMaxValue = weatherRootDto.DailyForecasts[0].Temperature.Maximum.Value;
+                dto.TempMaxUnit = weatherRootDto.DailyForecasts[0].Temperature.Maximum.Unit;
+                dto.TempMaxUnitType = weatherRootDto.DailyForecasts[0].Temperature.Maximum.UnitType;
+
+                dto.DayIcon = weatherRootDto.DailyForecasts[0].Day.Icon;
+                dto.DayIconPhrase = weatherRootDto.DailyForecasts[0].Day.IconPhrase;
+                dto.DayHasPrecipitation = weatherRootDto.DailyForecasts[0].Day.HasPrecipitation;
+                dto.DayPrecipitationType = weatherRootDto.DailyForecasts[0].Day.PrecipitationType;
+                dto.DayPrecipitationIntensity = weatherRootDto.DailyForecasts[0].Day.PrecipitationIntensity;
+
+                dto.NightIcon = weatherRootDto.DailyForecasts[0].Night.Icon;
+                dto.NightIconPhrase = weatherRootDto.DailyForecasts[0].Night.IconPhrase;
+                dto.NightHasPrecipitation = weatherRootDto.DailyForecasts[0].Night.HasPrecipitation;
+                dto.NightPrecipitationType = weatherRootDto.DailyForecasts[0].Night.PrecipitationType;
+                dto.NightPrecipitationIntensity = weatherRootDto.DailyForecasts[0].Night.PrecipitationIntensity;
+
+                dto.Sources = weatherRootDto.DailyForecasts[0].Sources;
+                dto.DailyForecastsMobileLink = weatherRootDto.DailyForecasts[0].MobileLink;
+                dto.DailyForecastsLink = weatherRootDto.DailyForecasts[0].Link;
+
+
+
+            }
+
             return dto;
 
 

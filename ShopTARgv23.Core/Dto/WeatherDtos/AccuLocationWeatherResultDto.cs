@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ShopTARgv23.Core.Dto.WeatherDtos
@@ -17,6 +18,64 @@ namespace ShopTARgv23.Core.Dto.WeatherDtos
         public int Rank { get; set; }
 
         public string EffectiveDate { get; set; }
+
+        public long  EffectiveDateEpochDate { get; set; }
+
+        public long EndEpochDate { get; set; }
+        public Uri MobileLink { get; set; }
+
+        public long DailyForecastsEpochDate { get; set; }
+
+        public long TempMinValue { get; set; }
+
+        public long TempMinUnit { get; set; }
+
+
+        public double TempMinUnitType { get; set; }
+
+        public long TempMaxValue { get; set; }
+
+        public long TempMaxUnit { get; set; }
+
+        public long TempMaxUnitType { get; set; }
+
+        public long DayIcon { get; set; }
+
+        public string DayIconPhrase { get; set; }
+
+        public long NightIcon { get; set; }
+
+        public string NightIconPhrase { get; set; }
+
+        public bool DayHasPrecipitation { get; set; }
+
+        public string DayPrecipitationType { get; set; }
+
+        public string DayPrecipitationIntensity { get; set; }
+
+        public bool NightHasPrecipitation { get; set; }
+
+        public string NightPrecipitationType { get; set; }
+
+        public string NightPrecipitationIntensity { get; set; }
+
+        public string[] Sources { get; set; }
+
+        public Uri DailyForecastsMobileLink { get; set; }
+
+        public Uri DailyForecastsLink { get; set; }
+
+        public Uri Link { get; set; }
+
+        public DateTimeOffset DailyForecastsDate { get; set; }
+
+        public string Text { get; set; }
+
+        public DateTimeOffset EndDate { get; set; }
+
+        public int Severity { get; set; }
+        public string Category { get; set; }
+
 
         public string LocalizedName { get; set; }
         public string EnglishName { get; set; }

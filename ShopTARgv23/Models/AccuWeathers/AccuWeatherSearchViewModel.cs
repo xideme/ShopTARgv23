@@ -10,6 +10,5 @@ namespace ShopTARgv23.Models.AccuWeathers
         [Display(Name = "City Name")]
         public string CityName  { get; set; }
         public string CityCode { get; set; }
-        public string Rank { get; set; }
     }
 }
