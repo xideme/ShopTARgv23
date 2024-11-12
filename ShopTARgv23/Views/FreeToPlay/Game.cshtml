@@ -1,0 +1,62 @@
+﻿@model ShopTARgv23.Models.FreeToPlay.FreeToPlayViewModel
+
+<div class="container">
+    <h2>Today's Free To Play game is is:</h2>
+    <h2>@Html.DisplayFor(model => model.Id)</h2>
+    <hr />
+    <dl class="row text-light">
+        <div class="form-group row">
+            <label asp-for="Title" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Title)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Thumbnail" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Thumbnail)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="ShortDescription" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="GameUrl" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.GameUrl)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Genre" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Genre)
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Platform" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Platform)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Publisher" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Publisher)
+        </div>
+        <div class="form-group row">
+            <label asp-for="Developer" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.Developer)
+        </div>
+        <div class="form-group row">
+            <label asp-for="ReleaseDate" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </div>
+        <div class="form-group row">
+            <label asp-for="FreetogameProfileUrl" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.FreetogameProfileUrl)
+        </div>
+    </dl>
+    <hr />
+
+    <div class="">
+        <form method="post">
+            <button asp-controller="freeToPlay" asp-action="Game" class="btn btn-primary">Game</button>
+        </form>
+        <button asp-controller="freeToPlay" asp-action="index" class="btn btn-primary">Index</button>
+    </div>
+</div>
