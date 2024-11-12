@@ -31,7 +31,7 @@ namespace ShopTARgv23.Core.Dto.WeatherDtos
         public long TempMinUnit { get; set; }
 
 
-        public double TempMinUnitType { get; set; }
+        public long TempMinUnitType { get; set; }
 
         public long TempMaxValue { get; set; }
 

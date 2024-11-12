@@ -34,7 +34,7 @@
 
         public long TempMinValue { get; set; }
 
-        public string TempMinUnit { get; set; }
+        public long TempMinUnit { get; set; }
 
         public long TempMinUnitType { get; set; }
 

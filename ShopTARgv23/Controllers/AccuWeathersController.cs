@@ -34,20 +34,14 @@ namespace ShopTARgv23.Controllers
         }
 
         [HttpGet]
-
-        public IActionResult City (string city)
+        public IActionResult City(string city)
         {
             AccuLocationWeatherResultDto dto = new();
             dto.CityName = city;
 
-
             _weatherForecastServices.AccuWeatherResult(dto);
-
             AccuWeatherViewModel vm = new();
 
-            //mapping dto and viewmodel
-
-               
             vm.EffectiveDate = dto.EffectiveDate;
             vm.EffectiveDateEpochDate = dto.EffectiveDateEpochDate;
             vm.Severity = dto.Severity;
@@ -58,13 +52,11 @@ namespace ShopTARgv23.Controllers
             vm.DailyForecastsDate = dto.DailyForecastsDate;
             vm.DailyForecastsEpochDate = dto.DailyForecastsEpochDate;
 
-            vm.TemMinValue = dto.TempMinValue;
-            vm.TemMinUnit = dto.TempMinUnit;
-            vm.TemMinUnitType = dto.TempMinUnitType;
+            vm.TempMinValue = dto.TempMinValue;
+            vm.TempMinUnit = dto.TempMinUnit;
+            vm.TempMinUnitType = dto.TempMinUnitType;
 
-
-
-            vm.TemMaxValue = dto.TempMaxValue;
+            vm.TempMaxValue = dto.TempMaxValue;
             vm.TempMaxUnit = dto.TempMaxUnit;
             vm.TempMaxUnitType = dto.TempMaxUnitType;
 
@@ -82,7 +74,6 @@ namespace ShopTARgv23.Controllers
 
             vm.MobileLink = dto.MobileLink;
             vm.Link = dto.Link;
-
 
             return View(vm);
         }
