@@ -1,13 +1,8 @@
 ﻿using Nancy.Json;
 using ShopTARgv23.Core.Dto.WeatherDtos;
 using ShopTARgv23.Core.ServiceInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
+
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
@@ -19,22 +14,19 @@ namespace ShopTARgv23.ApplicationServices.Services
             string accuApiKey = "AKuS67HdRmwN4xMwfcgTYv3reH8U4bBG";
             string url = $"http://dataservice.accuweather.com/locations/v1/cities/search?apikey={accuApiKey}&q={dto.CityName}";
 
-
             using (WebClient client = new WebClient())
             {
                 string json = client.DownloadString(url);
 
-                List<AccuLocationRootDto> accuResult = new JavaScriptSerializer().Deserialize<List<AccuLocationRootDto>>(json);
-
-
+                List<AccuLocationRootDto> accuResult = new JavaScriptSerializer()
+                    .Deserialize<List<AccuLocationRootDto>>(json);
                 //127964
                 dto.CityName = accuResult[0].LocalizedName;
                 dto.CityCode = accuResult[0].Key;
                 dto.Rank = accuResult[0].Rank;
-
             }
 
-            string urlWeather = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.CityCode}?apikey={accuApiKey}";
+            string urlWeather = $"https://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.CityCode}?apikey={accuApiKey}&metric=true";
 
             using (WebClient client = new WebClient())
             {
@@ -43,7 +35,7 @@ namespace ShopTARgv23.ApplicationServices.Services
                     .Deserialize<AccuWeatherRootDto>(json);
 
                 dto.EffectiveDate = weatherRootDto.Headline.EffectiveDate;
-                dto.EffectiveDateEpochDate = weatherRootDto.Headline.EffectiveEpochDate;
+                dto.EffectiveEpochDate = weatherRootDto.Headline.EffectiveEpochDate;
                 dto.Severity = weatherRootDto.Headline.Severity;
                 dto.Text = weatherRootDto.Headline.Text;
                 dto.Category = weatherRootDto.Headline.Category;
@@ -76,17 +68,9 @@ namespace ShopTARgv23.ApplicationServices.Services
                 dto.NightPrecipitationType = weatherRootDto.DailyForecasts[0].Night.PrecipitationType;
                 dto.NightPrecipitationIntensity = weatherRootDto.DailyForecasts[0].Night.PrecipitationIntensity;
 
-                dto.Sources = weatherRootDto.DailyForecasts[0].Sources;
-                dto.DailyForecastsMobileLink = weatherRootDto.DailyForecasts[0].MobileLink;
-                dto.DailyForecastsLink = weatherRootDto.DailyForecasts[0].Link;
-
-
-
             }
 
             return dto;
-
-
         }
     }
 }

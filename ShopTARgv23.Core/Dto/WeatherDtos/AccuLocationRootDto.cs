@@ -1,7 +1,5 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -9,7 +7,53 @@ using System.Threading.Tasks;
 
 namespace ShopTARgv23.Core.Dto.WeatherDtos
 {
+    public class AccuLocationRootDto
+    {
+        [JsonPropertyName("Version")]
+        public int Version { get; set; }
 
+        [JsonPropertyName("Key")]
+        public string Key { get; set; }
+
+        [JsonPropertyName("Type")]
+        public string Type { get; set; }
+
+        [JsonPropertyName("Rank")]
+        public int Rank { get; set; }
+
+        [JsonPropertyName("LocalizedName")]
+        public string LocalizedName { get; set; }
+
+        [JsonPropertyName("EnglishName")]
+        public string EnglishName { get; set; }
+
+        [JsonPropertyName("PrimaryPostalCode")]
+        public string PrimaryPostalCode { get; set; }
+
+        [JsonPropertyName("Region")]
+        public Region Region { get; set; }
+
+        [JsonPropertyName("Country")]
+        public Country Country { get; set; }
+
+        [JsonPropertyName("AdministrativeArea")]
+        public AdministrativeArea AdministrativeArea { get; set; }
+
+        [JsonPropertyName("TimeZone")]
+        public TimeZone TimeZone { get; set; }
+
+        [JsonPropertyName("GeoPosition")]
+        public GeoPosition GeoPosition { get; set; }
+
+        [JsonPropertyName("IsAlias")]
+        public bool IsAlias { get; set; }
+
+        [JsonPropertyName("SupplementalAdminAreas")]
+        public List<SupplementalAdminArea> SupplementalAdminAreas { get; set; }
+
+        [JsonPropertyName("DataSets")]
+        public List<string> DataSets { get; set; }
+    }
 
     public class AdministrativeArea
     {
@@ -104,65 +148,6 @@ namespace ShopTARgv23.Core.Dto.WeatherDtos
         public string EnglishName { get; set; }
     }
 
-    //public class AccuLocationRootDto
-    //{
-    //    [JsonPropertyName("City")]
-
-    //    public List<City> Citys { get; set; }
-    //    }
-
-    public class AccuLocationRootDto
-    {
-
-        [JsonPropertyName("City")]
-
-        public List<City> Citys { get; set; }
-
-        [JsonPropertyName("Version")]
-        public int Version { get; set; }
-
-        [JsonPropertyName("Key")]
-        public string Key { get; set; }
-
-        [JsonPropertyName("Type")]
-        public string Type { get; set; }
-
-        [JsonPropertyName("Rank")]
-        public int Rank { get; set; }
-
-        [JsonPropertyName("LocalizedName")]
-        public string LocalizedName { get; set; }
-
-        [JsonPropertyName("EnglishName")]
-        public string EnglishName { get; set; }
-
-        [JsonPropertyName("PrimaryPostalCode")]
-        public string PrimaryPostalCode { get; set; }
-
-        [JsonPropertyName("Region")]
-        public Region Region { get; set; }
-
-        [JsonPropertyName("Country")]
-        public Country Country { get; set; }
-
-        [JsonPropertyName("AdministrativeArea")]
-        public AdministrativeArea AdministrativeArea { get; set; }
-
-        [JsonPropertyName("TimeZone")]
-        public TimeZone TimeZone { get; set; }
-
-        [JsonPropertyName("GeoPosition")]
-        public GeoPosition GeoPosition { get; set; }
-
-        [JsonPropertyName("IsAlias")]
-        public bool IsAlias { get; set; }
-
-        [JsonPropertyName("SupplementalAdminAreas")]
-        public List<SupplementalAdminArea> SupplementalAdminAreas { get; set; }
-
-        [JsonPropertyName("DataSets")]
-        public List<string> DataSets { get; set; }
-    }
 
     public class SupplementalAdminArea
     {

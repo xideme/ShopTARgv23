@@ -1,19 +1,18 @@
 ﻿@model ShopTARgv23.Models.AccuWeathers.AccuWeatherViewModel
 
-
 <div class="container">
     <h2>Forecast for the selected city</h2>
     <h2>@Html.DisplayFor(model => model.CityName)</h2>
     <hr />
-    <dl class="row text-dark">
+    <dl class="row text-light">
         <div class="form-group row">
-            <label asp-for="TemMinValue" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.TemMinValue) °C
+            <label asp-for="TempMinValue" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.TempMinValue) °C
         </div>
 
         <div class="form-group row">
-            <label asp-for="TemMaxValue" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => model.TemMaxValue) °C
+            <label asp-for="TempMaxValue" class="col-sm-2 col-form-label"></label>
+            @Html.DisplayFor(model => model.TempMaxValue) °C
         </div>
 
         <div class="form-group row">
@@ -43,4 +42,3 @@
         <button asp-controller="accuWeathers" asp-action="Index" class="btn btn-success">Index</button>
     </form>
 </div>
-

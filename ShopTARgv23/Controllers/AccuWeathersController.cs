@@ -27,7 +27,7 @@ namespace ShopTARgv23.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("City", "AccuWeathers", new { city = model.CityName });
+                return RedirectToAction("City", "AccuWeathers", new { city = model.CityName});
             }
 
             return View(model);
@@ -43,7 +43,7 @@ namespace ShopTARgv23.Controllers
             AccuWeatherViewModel vm = new();
 
             vm.EffectiveDate = dto.EffectiveDate;
-            vm.EffectiveDateEpochDate = dto.EffectiveDateEpochDate;
+            vm.EffectiveEpochDate = dto.EffectiveEpochDate;
             vm.Severity = dto.Severity;
             vm.Text = dto.Text;
             vm.Category = dto.Category;
