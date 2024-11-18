@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopTARgv23.Core.ServiceInterface;
+using ShopTARgv23.Models.AccuWeathers;
+using ShopTARgv23.Models.Cocktails;
 
 namespace ShopTARgv23.Controllers
 {
@@ -16,9 +18,27 @@ namespace ShopTARgv23.Controllers
             _cocktailsServices = cocktailsServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //var listCocktails = await _cocktailsServices.CocktailsResult();
+
+            
+
+            //var viewModelList = listCocktails.Select (Cocktail )
+
             return View();
         }
+
+        [HttpPost]
+        public IActionResult SearchCocktail(CocktailsSearchViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Cocktail", "Cocktails", new { cocktail = model.strDrink });
+            }
+
+            return View(model);
+        }
+
     }
 }
