@@ -1,14 +1,26 @@
-﻿<div class="container">
-    <form method="post">
-        <div class="container">
-            <div class="form-group col-md-offset-3 col-md-5">
-                <h2>Welcome to FreeToPlay api  site</h2>
+﻿@model IEnumerable<ShopTARgv23.Models.FreeToPlay.FreeToPlayViewModel>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var Game in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="game-card card">
+                            <img class="card-img-top" src="@Game.Thumbnail" alt="@Game.Title" />
+                            <div class="card-body">
+                                <h5 class="card-title">@Game.Title</h5>
+                                <p class="card-text">@Game.ShortDescription</p>
+                                <a href="@Game.GameUrl" class="btn btn-game" target="_blank">
+                                    @(Game.Platform == "Web Browser" ? "Play Now" : "To Download")
+                                </a>
+                            </div>
+                         </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="container">
-            <div class="form-group col-md-offset-3 col-md-5">
-                <button asp-controller="freeToPlay" asp-action="Game" class="btn btn-primary">Free To Play Game</button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>

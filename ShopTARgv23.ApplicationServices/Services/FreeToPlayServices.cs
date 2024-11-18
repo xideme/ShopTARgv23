@@ -14,34 +14,28 @@ namespace ShopTARgv23.ApplicationServices.Services
     public class FreeToPlayServices : IFreeToPlayServices
     {
 
-        public async Task<FreeToPlayResultDto> FreeToPlayResult(FreeToPlayResultDto dto)
+        public async Task<List<FreeToPlayRootDto>> FreeToPlayResult()
         {
 
             string url = $"https://www.freetogame.com/api/games";
+            List<FreeToPlayRootDto> gameList = new List<FreeToPlayRootDto>();
 
             using (WebClient client = new WebClient())
             {
                 string json = client.DownloadString(url);
 
-                List<FreeToPlayRootDto> freetoplayResult = new JavaScriptSerializer()
+                var result = new JavaScriptSerializer()
                     .Deserialize<List<FreeToPlayRootDto>>(json);
 
-                dto.Id = freetoplayResult[0].Id;
-                dto.Title = freetoplayResult[0].Title;
-                dto.Thumbnail = freetoplayResult[0].Thumbnail;
-                dto.ShortDescription = freetoplayResult[0].ShortDescription;
-                dto.GameUrl = freetoplayResult[0].GameUrl;
-                dto.Genre = freetoplayResult[0].Genre;
-                dto.Platform = freetoplayResult[0].Platform;
-                dto.Publisher = freetoplayResult[0].Publisher;
-                dto.Developer = freetoplayResult[0].Developer;
-                dto.ReleaseDate = freetoplayResult[0].ReleaseDate;
-                dto.FreetogameProfileUrl = freetoplayResult[0].FreetogameProfileUrl;
+                if (result != null)
+                {
+                    gameList.AddRange(result);
 
-
+                }
+                
             }
 
-            return dto;
+            return gameList;
         }
 
     }

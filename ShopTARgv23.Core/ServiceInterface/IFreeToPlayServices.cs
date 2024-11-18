@@ -10,6 +10,6 @@ namespace ShopTARgv23.Core.ServiceInterface
 {
     public interface IFreeToPlayServices
     {
-        Task<FreeToPlayResultDto> FreeToPlayResult(FreeToPlayResultDto dto);
+        Task<List<FreeToPlayRootDto>> FreeToPlayResult();
     }
 }
