@@ -10,6 +10,6 @@ namespace ShopTARgv23.Core.ServiceInterface
 {
     public interface ICocktailsServices
     {
-        Task<List<CocktailsResultDto>> CocktailsResult(CocktailsResultDto dto);
+        Task<List<CocktailsRootDto>> CocktailsResult();
     }
 }
