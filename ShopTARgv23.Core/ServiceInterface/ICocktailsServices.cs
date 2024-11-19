@@ -1,4 +1,4 @@
-﻿using ShopTARgv23.Core.Dto.CocktailsDto;
+﻿using ShopTARgv23.Core.Dto.CocktailDto;
 using ShopTARgv23.Core.Dto.FreeToPlayRootDto;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace ShopTARgv23.Core.ServiceInterface
 {
     public interface ICocktailsServices
     {
-        Task<List<CocktailsRootDto>> CocktailsResult();
+        Task<CocktailResultDto> GetCocktails(CocktailResultDto dto);
     }
 }
