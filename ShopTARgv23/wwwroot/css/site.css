@@ -7,7 +7,19 @@ body {
     line-height: 1.42em;
     color: #A7A1AE;
     background-color: #1F2739;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
+
+footer {
+    margin-top: auto; /* Push footer to bottom of the flex container */
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    text-align: center;
+}
+
 
 h1 {
     font-size: 4em;
@@ -61,13 +73,15 @@ h2 {
     box-shadow: 0 2px 2px -2px #0E1119;
 }
 
+
 .container {
     text-align: left;
     overflow: hidden;
     width: 100%;
     margin: 0 auto;
-    display: table;
+    flex: 1; /* Allows this to expand and fill space between header and footer */
     padding: 0 0 2em 0;
+    display: block; /* Change from `table` to `block` */
 }
 
     .container td, .container th {
