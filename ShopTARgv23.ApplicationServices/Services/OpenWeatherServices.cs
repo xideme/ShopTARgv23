@@ -17,7 +17,7 @@ namespace ShopTARgv23.ApplicationServices.Services
         public async Task<OpenWeatherResultDto> OpenWeatherResult(OpenWeatherResultDto dto)
         {
             string openApiKey = "504616f82ab1350525bed3e6a501d810";
-            string url = $"https://api.openweathermap.org/data/2.5/weather?q={dto.Name}&appid={openApiKey}";
+            string url = $"https://api.openweathermap.org/data/2.5/weather?units=metric&q={dto.Name}&appid={openApiKey}";
 
             using (WebClient client = new WebClient())
             {
