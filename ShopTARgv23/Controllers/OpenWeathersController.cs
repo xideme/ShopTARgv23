@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentFormat.OpenXml.Packaging;
+using Microsoft.AspNetCore.Mvc;
 using ShopTARgv23.Core.Dto.OpenWeatherDto;
 using ShopTARgv23.Core.ServiceInterface;
 using ShopTARgv23.Models.OpenWeathers;
@@ -27,39 +28,54 @@ namespace ShopTARgv23.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Redirect to the City action with the searched city as a parameter
-                return RedirectToAction("City", "OpenWeather", new { city = model.Name });
-            }
 
-            // If the model state is invalid, return the current view
+                return RedirectToAction("City", "OpenWeathers", new { city = model.Name });
+            }
             return View(model);
         }
 
-        // GET action to show the weather details for the city
+     
         [HttpGet]
-        public IActionResult City(string city)
+        public async Task<IActionResult> City(string city)
         {
             OpenWeatherResultDto dto = new OpenWeatherResultDto
             {
-                Name = city // Assign city name from the query parameter
+                Name = city 
             };
 
-            // Get weather data using the service
-            _openWeatherServices.OpenWeatherResult(dto);
+            
+            await _openWeatherServices.OpenWeatherResult(dto);
 
-            // Create a view model to pass data to the view
             OpenWeatherViewModel vm = new OpenWeatherViewModel
             {
                 Name = dto.Name,
-                Temp = dto.Main.Temp,
-                TempMin = dto.Main.TempMin,
-                TempMax = dto.Main.TempMax,
-                Description = dto.Weather[0].Description,
-                WindSpeed = dto.Wind.Speed,
-                WeatherIcon = dto.Weather[0].Icon
+                Temp = dto.Main?.Temp ?? 0,
+                feels_like = dto.Main?.feels_like ?? 0,
+                Humidity = dto.Main?.Humidity ?? 0,
+                Pressure = dto.Main?.Pressure ?? 0,
+                TempMin = dto.Main?.TempMin ?? 0,
+                TempMax = dto.Main?.TempMax ?? 0,
+                Description = dto.Weather?.FirstOrDefault()?.Description ?? "No description available",
+                WindSpeed = dto.Wind?.Speed ?? 0,
+                Deg = dto.Wind?.Deg ?? 0,
+                SeaLevel = dto.Main?.SeaLevel ?? 0,
+                GrndLevel = dto.Main?.GrndLevel ?? 0,
+                Clouds = dto.Clouds,
+                All = dto.Clouds?.All ?? 0,
+                Timezone = dto.Timezone,
+                Lon = dto.Coord?.Lon ?? 0,
+                Lat = dto.Coord?.Lat ?? 0,
+                Type = dto.Sys?.Type ?? 0,
+                IdSys = dto.Sys?.Id ?? 0,
+                Sunrise = dto.Sys?.Sunrise ?? 0,
+                Sunset = dto.Sys?.Sunset ?? 0,
+
+
+
+
             };
 
-            // Return the view with the populated view model
+           
             return View(vm);
         }
     }

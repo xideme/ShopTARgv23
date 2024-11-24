@@ -23,7 +23,7 @@ namespace ShopTARgv23.Models.OpenWeathers
         public double Lat { get; set; }
 
         public double Temp { get; set; }
-        public double FeelsLike { get; set; }
+        public double feels_like { get; set; }
         public double TempMin { get; set; }
         public double TempMax { get; set; }
         public long Pressure { get; set; }

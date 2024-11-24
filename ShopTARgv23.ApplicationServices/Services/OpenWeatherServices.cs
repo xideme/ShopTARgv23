@@ -22,6 +22,7 @@ namespace ShopTARgv23.ApplicationServices.Services
             using (WebClient client = new WebClient())
             {
                 string json = client.DownloadString(url);
+                Console.WriteLine(json);  // Log the raw response
                 OpenWeatherRootDto openweatherRootDto = new JavaScriptSerializer()
                     .Deserialize<OpenWeatherRootDto>(json);
 
@@ -45,8 +46,8 @@ namespace ShopTARgv23.ApplicationServices.Services
                 dto.Coord.Lat = openweatherRootDto.Coord.Lat;
                 dto.Coord.Lon = openweatherRootDto.Coord.Lon;
 
-                dto.Main.Temp =   openweatherRootDto.Main.Temp;
-                dto.Main.FeelsLike = openweatherRootDto.Main.FeelsLike;
+                dto.Main.Temp = openweatherRootDto.Main.Temp;
+                dto.Main.feels_like = openweatherRootDto.Main.feels_like;
                 dto.Main.TempMin = openweatherRootDto.Main.TempMin;
                 dto.Main.TempMax = openweatherRootDto.Main.TempMax;
                 dto.Main.Pressure = openweatherRootDto.Main.Pressure;

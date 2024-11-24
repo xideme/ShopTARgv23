@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +28,7 @@ namespace ShopTARgv23.Core.Dto.OpenWeatherDto
         public double Lat { get; set; }
 
         public double Temp { get; set; }
-        public double FeelsLike { get; set; }
+        public double feels_like { get; set; }
         public double TempMin { get; set; }
         public double TempMax { get; set; }
         public long Pressure { get; set; }

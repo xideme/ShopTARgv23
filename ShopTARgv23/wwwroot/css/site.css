@@ -13,12 +13,6 @@ body {
     flex-direction: column;
 }
 
-footer {
-    margin-top: auto; /* Push footer to bottom of the flex container */
-    background-color: #f8f9fa;
-    padding: 1rem 0;
-    text-align: center;
-}
 
 
 h1 {

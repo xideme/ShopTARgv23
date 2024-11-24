@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Spreadsheet;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,8 +72,8 @@ namespace ShopTARgv23.Core.Dto.OpenWeatherDto
         [JsonPropertyName("temp")]
         public double Temp { get; set; }
 
-        [JsonPropertyName("feels_like")]
-        public double FeelsLike { get; set; }
+        [JsonProperty("feels_like")]
+        public double feels_like { get; set; }
 
         [JsonPropertyName("temp_min")]
         public double TempMin { get; set; }
