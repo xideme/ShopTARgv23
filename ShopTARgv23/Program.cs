@@ -23,6 +23,7 @@ namespace ShopTARgv23
             builder.Services.AddScoped<IFreeToPlayServices, FreeToPlayServices>();
             builder.Services.AddScoped<ICocktailsServices, CocktailServices>();
             builder.Services.AddScoped<IOpenWeatherServices, OpenWeatherServices>();
+            builder.Services.AddScoped<IEmailsServices, EmailsServices>();
 
 
             builder.Services.AddDbContext<ShopTARgv23Context>(options =>

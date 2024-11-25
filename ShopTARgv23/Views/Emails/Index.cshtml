@@ -1,0 +1,30 @@
+﻿@model ShopTARgv23.Models.Emails.EmailViewModel
+
+
+<h1>Send an email</h1>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="container">
+            <div class="form-group col-md-offset-3 col-md-5">
+                <h2>Write a message</h2>
+                <label asp-for="To" style="font-family: Arial"></label>
+                <input asp-for="To" class="form-control" />
+                <span asp-validation-for="To" class="text-danger"></span>
+
+                <label asp-for="Subject" style="font-family: Arial"></label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+
+                <label asp-for="Body" style="font-family: Arial"></label>
+                <textarea asp-for="Body" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="form-group col-md-offset-3 col-md-5">
+                <button asp-controller="Emails" asp-action="SendEmail" class="btn btn-primary">Send an email</button>
+            </div>
+        </div>
+    </form>
+</div>
