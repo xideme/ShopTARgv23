@@ -36,14 +36,15 @@ namespace ShopTARgv23
             {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequiredLength = 3;
-                options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmations";
+
+                options.Tokens.EmailConfirmationTokenProvider = "CustomEmailConfirmation";
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             })
-                .AddEntityFrameworkStores<ShopTARgv23Context>()
-                .AddDefaultTokenProviders()
-                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
-                .AddDefaultUI();
+            .AddEntityFrameworkStores<ShopTARgv23Context>()
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
+            .AddDefaultUI();
 
             var app = builder.Build();
 

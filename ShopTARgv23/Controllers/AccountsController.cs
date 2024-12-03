@@ -31,7 +31,6 @@ namespace ShopTARgv23.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-
         public async Task<IActionResult> Register(RegisterViewModel vm)
         {
             if (ModelState.IsValid)
@@ -55,18 +54,17 @@ namespace ShopTARgv23.Controllers
                         return RedirectToAction("ListUsers", "Administrations");
                     }
 
-                    ViewBag.ErrorTitle = "Registration succesfull";
+                    ViewBag.ErrorTitle = "Registration succesful";
                     ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
                         "email, by clicking on the confirmation link we have emailed you";
 
-                    return View("Error");
+                    return View("ErrorEmail");
                 }
 
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
-
             }
 
             return View();
