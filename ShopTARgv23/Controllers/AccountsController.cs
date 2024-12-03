@@ -69,5 +69,18 @@ namespace ShopTARgv23.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+
+        public async Task <IActionResult> Login(string? returnUrl)
+        {
+            LoginViewModel vm = new()
+            {
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+
+            return View(vm);
+        }
     }
 }
