@@ -67,6 +67,15 @@ namespace ShopTARgv23
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager =
+                    scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                var roles = new[] { "Admin", "User" };
+            }
+
             app.Run();
         }
     }

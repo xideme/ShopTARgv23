@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Packaging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopTARgv23.Core.Dto.OpenWeatherDto;
 using ShopTARgv23.Core.ServiceInterface;
@@ -6,6 +7,7 @@ using ShopTARgv23.Models.OpenWeathers;
 
 namespace ShopTARgv23.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OpenWeathersController : Controller
     {
         private readonly IOpenWeatherServices _openWeatherServices;
