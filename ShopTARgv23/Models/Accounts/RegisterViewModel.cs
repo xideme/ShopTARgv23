@@ -20,5 +20,7 @@ namespace ShopTARgv23.Models.Accounts
 
         public string City { get; set; }
 
+        public string FirstName { get; set; }
+
     }
 }
