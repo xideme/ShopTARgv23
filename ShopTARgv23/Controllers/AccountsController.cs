@@ -112,6 +112,9 @@ namespace ShopTARgv23.Controllers
                     }
                     else
                     {
+                        //ApplicationUser applicationUser = new();
+
+                        //model.FirstName = applicationUser.FirstName;
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -126,6 +129,22 @@ namespace ShopTARgv23.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
 
     }
 }

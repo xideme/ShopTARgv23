@@ -21,6 +21,8 @@ namespace ShopTARgv23.Models.Accounts
 
         public string? ReturnUrl { get; set; }
 
+        public string? FirstName { get; set; }  
+
         public IList <AuthenticationScheme>? ExternalLogins { get; set; }
     }
 }
