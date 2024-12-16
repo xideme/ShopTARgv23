@@ -10,5 +10,7 @@ namespace ShopTARgv23.Core.ServiceInterface
     public interface IEmailsServices
     {
         Task SendEmail(EmailDto dto);
+
+        void SendEmailToken(EmailTokenDto dto, string token);
     }
 }
