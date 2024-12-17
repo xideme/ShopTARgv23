@@ -27,24 +27,41 @@ namespace ShopTARgv23.ApplicationServices.Services
             _config = config;
         }
 
-        public async Task SendEmail(EmailDto dto)
+        public void SendEmail(EmailDto dto)
         {
             var email = new MimeMessage();
-
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(dto.To));
             email.Subject = dto.Subject;
-            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            //email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            //{
+            //    Text = dto.Body
+            //};
+            var builder = new BodyBuilder
             {
-                Text = dto.Body
+                HtmlBody = dto.Body
             };
 
-            using var smtp = new SmtpClient();
-            await smtp.ConnectAsync(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
-            await smtp.SendAsync(email);
-            await smtp.DisconnectAsync(true);
+            foreach (var file in dto.Attachment)
+            {
+                if (file.Length > 0)
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        file.CopyTo(stream);
+                        stream.Position = 0;
+                        builder.Attachments.Add(file.FileName, stream.ToArray());
+                    }
+                }
+            }
+            email.Body = builder.ToMessageBody();
 
+            using var smtp = new SmtpClient();
+
+            smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
+            smtp.Send(email);
+            smtp.Disconnect(true);
         }
 
 
@@ -55,16 +72,14 @@ namespace ShopTARgv23.ApplicationServices.Services
 
             _config.GetSection("EmailUserName").Value = "thecron57@gmail.com";
             _config.GetSection("EmailHost").Value = "smtp.gmail.com";
-            _config.GetSection("EmailPassword").Value = "";
+            _config.GetSection("EmailPassword").Value = "jdfy bnwp nnbx rigx";
 
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(dto.To));
             email.Subject = dto.Subject;
-
             var builder = new BodyBuilder
             {
                 HtmlBody = dto.Body,
-
             };
 
             email.Body = builder.ToMessageBody();
@@ -72,8 +87,8 @@ namespace ShopTARgv23.ApplicationServices.Services
 
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, MailKit.Security.SecureSocketOptions.StartTls);
             smtp.Authenticate(_config.GetSection("EmailUserName").Value, _config.GetSection("EmailPassword").Value);
-            smtp.SendAsync(email);
-            smtp.DisconnectAsync(true);
+            smtp.Send(email);
+            smtp.Disconnect(true);
         }
     }
 }

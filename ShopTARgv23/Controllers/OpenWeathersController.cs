@@ -7,7 +7,7 @@ using ShopTARgv23.Models.OpenWeathers;
 
 namespace ShopTARgv23.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class OpenWeathersController : Controller
     {
         private readonly IOpenWeatherServices _openWeatherServices;

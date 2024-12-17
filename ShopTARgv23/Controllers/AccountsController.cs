@@ -51,7 +51,7 @@ namespace ShopTARgv23.Controllers
                     UserName = vm.Email,
                     Email = vm.Email,
                     City = vm.City,
-                    FirstName = vm.FirstName
+                    FirstName = vm.FirstName,
                 };
 
                 var result = await _userManager.CreateAsync(user, vm.Password);
@@ -61,7 +61,6 @@ namespace ShopTARgv23.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userId = user.Id, token = token }, Request.Scheme);
 
-
                     //if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                     //{
                     //    return RedirectToAction("ListUsers", "Administrations");
@@ -69,8 +68,8 @@ namespace ShopTARgv23.Controllers
 
                     EmailTokenDto newsignup = new();
                     newsignup.Token = token;
-                    newsignup.Body = $"Please register your account using this link: <a href=\"{confirmationLink}\">click here</a>;";
-                    newsignup.Subject = "CRUD Registration";
+                    newsignup.Body = $"Please registrate your account by: <a href=\"{confirmationLink}\">clicking here</a>;";
+                    newsignup.Subject = "CRUD registration";
                     newsignup.To = user.Email;
 
                     _emailsServices.SendEmailToken(newsignup, token);
@@ -103,54 +102,47 @@ namespace ShopTARgv23.Controllers
         [HttpGet]
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-
-        public async Task<IActionResult> ConfirmEmail (string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if (userId == null || token == null) 
+            if (userId == null || token == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
-
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"The user with ID of {userId} is not valid";
+                ViewBag.ErrorMessage = $"The user with is of {userId} is not valid";
                 return View("NotFound");
             }
-
             var result = await _userManager.ConfirmEmailAsync(user, token);
-
             List<string> errordatas =
-                         [
+                        [
                         "Area", "Accounts",
                         "Issue", "Success",
                         "StatusMessage", "Registration Success",
                         "ActedOn", $"{user.Email}",
                         "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
                         ];
-
             if (result.Succeeded)
             {
                 errordatas =
-                       [
+                        [
                         "Area", "Accounts",
                         "Issue", "Success",
                         "StatusMessage", "Registration Success",
                         "ActedOn", $"{user.Email}",
                         "CreatedAccountData", $"{user.Email}\n{user.City}\n[password hidden]\n[password hidden]"
                         ];
-
-                ViewBag.ErrorData = errordatas;
+                ViewBag.ErrorDatas = errordatas;
                 return View();
             }
 
             ViewBag.ErrorDatas = errordatas;
             ViewBag.ErrorTitle = "Email cannot be confirmed";
-            ViewBag.ErrorMessage = $"The user email, with userId of {userId}, cannot be confirmed.";
+            ViewBag.ErrorMessage = $"The users email, with userdid of {userId}, cannot be confirmed.";
             return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
 
 
 
@@ -197,6 +189,7 @@ namespace ShopTARgv23.Controllers
                         //ApplicationUser applicationUser = new();
 
                         //model.FirstName = applicationUser.FirstName;
+
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -213,12 +206,12 @@ namespace ShopTARgv23.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
 
         [HttpGet]
         
