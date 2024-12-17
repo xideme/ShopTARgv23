@@ -10,6 +10,8 @@ using System.Linq;
 using MailKit.Net.Smtp;
 using System.Text;
 using System.Threading.Tasks;
+using ShopTARgv23.Core.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace ShopTARgv23.ApplicationServices.Services
 {
@@ -90,5 +92,6 @@ namespace ShopTARgv23.ApplicationServices.Services
             smtp.Send(email);
             smtp.Disconnect(true);
         }
+
     }
 }

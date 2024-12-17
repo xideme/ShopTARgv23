@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity.UI.V5.Pages.Account.Internal;
 using Microsoft.AspNetCore.Mvc;
 using ShopTARgv23.ApplicationServices.Services;
@@ -10,6 +12,7 @@ using ShopTARgv23.Models;
 using ShopTARgv23.Models.Accounts;
 using System.Diagnostics;
 using System.Reflection.Metadata;
+using System.Text.Encodings.Web;
 
 namespace ShopTARgv23.Controllers
 {
@@ -263,23 +266,47 @@ namespace ShopTARgv23.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (user != null && await _userManager.IsEmailConfirmedAsync(user)) ;
+                if (user != null && await _userManager.IsEmailConfirmedAsync(user))
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
                     var passwordResetLink = Url.Action("ResetPassword", "Accounts", new { email = model.Email, token = token }, Request.Scheme);
-                }
-                    return View("ForgotPasswordConfirmation");
-            }
 
-                    return View(model);
+                    EmailTokenDto passReset = new();
+                    passReset.Token = token;
+                    passReset.Body = $"Please reset your password: <a href=\"{passwordResetLink}\">clicking here</a>";
+                    passReset.Subject = "CRUD password reset";
+                    passReset.To = user.Email;
+
+                    _emailsServices.SendEmailToken(passReset, token);
+                    List<string> errordatas =
+                        [
+                        "Area", "Accounts",
+                        "Issue", "Success",
+                        "StatusMessage", "Registration Success",
+                        "ActedOn", $"{model.Email}",
+                        "CreatedAccountData", $"{model.Email}\n\n[password hidden]\n[password hidden]"
+                        ];
+                    ViewBag.ErrorDatas = errordatas;
+                    ViewBag.ErrorTitle = "You have successfully changed password";
+                    ViewBag.ErrorMessage = "Before you can log in, please reset password from the link" +
+                        "\nwe have emailed to your email address.";
+
+                    return View("ChangePasswordMessage");
+                }
+                return View(model);
+            }
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -306,6 +333,40 @@ namespace ShopTARgv23.Controllers
         }
 
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+               
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    // reset the user password
+                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ResetPasswordConfirmation", "Account");
+                    }
+                    
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
+                }
+               
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
 
        
     }
